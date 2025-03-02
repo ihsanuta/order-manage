@@ -1,0 +1,428 @@
+basePath: /api
+definitions:
+  models.Customer:
+    properties:
+      address:
+        type: string
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      phone:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+    type: object
+  models.LoginInput:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  models.Order:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      customerID:
+        type: integer
+      description:
+        type: string
+      id:
+        type: integer
+      total:
+        type: integer
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+    type: object
+  models.RegisterInput:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  models.Success:
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+  models.User:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+      username:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a sample API for order management
+  title: Order Management API
+  version: "1.0"
+paths:
+  /customer:
+    post:
+      consumes:
+      - application/json
+      description: Insert Customer Data
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Form Customer
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/models.Customer'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/models.Success'
+      security:
+      - BearerAuth: []
+      summary: Save Customer
+      tags:
+      - Customer
+  /customer/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get Customer By ID
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/models.Success'
+      security:
+      - BearerAuth: []
+      summary: Get Customer By ID
+      tags:
+      - Customer
+    put:
+      consumes:
+      - application/json
+      description: Update Customer Data
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Form Customer
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/models.Customer'
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/models.Success'
+      security:
+      - BearerAuth: []
+      summary: Update Customer
+      tags:
+      - Customer
+  /customer/list:
+    get:
+      consumes:
+      - application/json
+      description: Get List Customer
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Sorting
+        in: query
+        name: sorting
+        type: integer
+      - description: Search
+        in: query
+        name: search
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Success'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Get List Customer
+      tags:
+      - Customer
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Login User
+      parameters:
+      - description: Form Register
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/models.LoginInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Login User
+      tags:
+      - auth
+  /order:
+    post:
+      consumes:
+      - application/json
+      description: Insert Order Data
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Form Order
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/models.Order'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/models.Success'
+      security:
+      - BearerAuth: []
+      summary: Save Order
+      tags:
+      - Order
+  /order/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get Order By ID
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/models.Success'
+      security:
+      - BearerAuth: []
+      summary: Get Order By ID
+      tags:
+      - Order
+    put:
+      consumes:
+      - application/json
+      description: Update Order Data
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Form Order
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/models.Order'
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/models.Success'
+      security:
+      - BearerAuth: []
+      summary: Update Order
+      tags:
+      - Order
+  /order/list:
+    get:
+      consumes:
+      - application/json
+      description: Get List Order
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Sorting
+        in: query
+        name: sorting
+        type: integer
+      - description: Search
+        in: query
+        name: search
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Success'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Get List Order
+      tags:
+      - Order
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Register User
+      parameters:
+      - description: Form Register
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/models.RegisterInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Register User
+      tags:
+      - auth
+  /user/profile:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve profile user
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Get Profile User
+      tags:
+      - User
+swagger: "2.0"
